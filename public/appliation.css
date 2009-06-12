@@ -1,0 +1,110 @@
+.container {
+  font: normal normal normal 13.34px/normal helvetica, arial, clean, sans-serif;
+  width: 850px;
+  margin: 0 auto;
+}
+
+.details {
+  overflow: auto;
+  border: 1px solid #d8d8d8;
+  background-color: #fafafa;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.commit_info {
+  float: left;
+  width: 400px;
+}
+
+.commit_info .message {
+  font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
+  margin-bottom: 1em;
+}
+
+.person img {
+  float: left;
+  margin-right: 1em;
+}
+
+.person .contact {
+  float: left;
+}
+
+.person p {
+  margin: 0;
+  color: #999;
+}
+
+.related_commits {
+  float: right;
+  margin: 0;
+  width: 360px;
+}
+
+.related_commits dt {
+  clear: both;
+  width: 2em;
+  float: left;
+}
+
+.related_commits dd {
+  float: left;
+}
+
+ul.parents {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+ul.parents li {
+  margin: 0;
+}
+
+.diff h2 {
+  font-size: 130%;
+  font-weight: bold;
+  padding: 0.5em 0.7em;
+  border-top: 1px solid #d8d8d8;
+  border-left: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  margin-bottom: 0;
+  font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
+}
+
+.diff .diff_container {
+  width: 850px;
+  overflow: auto;
+}
+
+.diff table {
+  font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  font-size: 90%;
+  width: 100%;
+  border: 1px solid #d8d8d8;
+}
+
+.diff table td.ln {
+  border-right: 1px solid #d8d8d8;
+  padding: 0 0.3em;
+  width: 2em;
+  color: #999;
+}
+
+.diff h2,
+.diff table td.ln {
+  background-color: #e8e8e8;
+}
+
+.diff table td.code {
+  background-color: #fafafa;
+}
+.diff table td.delete {
+  background-color: #FFB3B3;
+}
+.diff table td.insert {
+  background-color: #B3FFB3;
+}
