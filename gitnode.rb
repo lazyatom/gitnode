@@ -40,7 +40,9 @@ module GitNode
 end
 
 def repo(params)
-  GitNode::Repository.new(File.join(GITNODE_ROOT, params[:repo]))
+  path = File.join(GITNODE_ROOT, params[:repo])
+  path += ".git" unless File.exist?(path)
+  GitNode::Repository.new(path)
 end
 
 get '/:repo/:branch/commits' do
