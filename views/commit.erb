@@ -14,9 +14,7 @@
       </div>
     <% end %>
   
-    <% if bit.comments.length == 0 %>
-      <p>No comments - <a href="#" class="show_comment_form">add one</a></p>
-    <% else %>
+    <% if bit.comments.length > 0 %>
       <ul class="comments">
       <% bit.comments.each do |comment| %>
         <li class="comment person" id="comment_<%= comment.id %>">
@@ -26,14 +24,14 @@
         </li>
       <% end %>
       </ul>
-      <p><a href="#" class="show_comment_form">add a comment</a></p>
     <% end %>
+    <p><a href="#" class="show_comment_form">add a comment</a></p>
   
     <form action="/<%= params[:repo] %>/commit/<%= params[:sha] %>/comments" method="post" class="comment_form">
       <input type="hidden" name="path" value="<%= bit.b_path %>" />
       <label for="author_name">Your name:</label><input type="text" name="author_name" class="text" value="<%= @author_name %>"/>
       <label for="author_email">Your email:</label><input type="text" name="author_email" class="text" value="<%= @author_email %>" />
-      <label for="body">Comment:</label><textarea name="body"></textarea>
+      <label for="body" class="body_label">Comment:</label><textarea name="body" class="comment_body"></textarea>
       <input type="submit" />
     </form>
     
@@ -45,7 +43,10 @@
   $(function() {
     $(".comment_form").hide();
     $(".show_comment_form").click(function() {
-      $(this).parent().parent().find(".comment_form").slideToggle();
+      var form = $(this).parent().parent().find(".comment_form");
+      form.slideDown();
+      $(this).hide();
+      form.find(".comment_body").focus();
       return false;
     })
   })

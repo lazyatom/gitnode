@@ -151,12 +151,12 @@ ul.parents li {
 
 }
 
-.comment_form label {
-  display: block;
+.comment_form {
+  width: 100%;
 }
 
-.comment_form input.text {
-  width: 100%;
+.comment_form .body_label {
+  display: none;
 }
 
 .comment_form textarea {
