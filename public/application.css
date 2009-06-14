@@ -134,6 +134,10 @@ ul.parents li {
   background-color: #B3FFB3;
 }
 
+.bit h3 {
+  margin-top: 0;
+}
+
 .comment_form label {
   display: block;
 }

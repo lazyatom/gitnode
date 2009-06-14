@@ -3,34 +3,53 @@
 </div>
 <% @commit.show.each do |bit| %>
   <div class="bit">
-  <% if bit.deleted_file %>
-    <p><%= bit.b_path %> was deleted.</p>
-  <% else %>
-    <div class="diff">
-      <h2><%= bit.b_path %></h2>
-      <div class="diff_container">
-        <%= diff bit %>
+    <% if bit.deleted_file %>
+      <p><%= bit.b_path %> was deleted.</p>
+    <% else %>
+      <div class="diff">
+        <h2><%= bit.b_path %></h2>
+        <div class="diff_container">
+          <%= diff bit %>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  
+    <h3><%= bit.comments.length == 0 ? "No" : "" %> Comments <a href="" class="show_comment_form">add</a></h3>
+    <ul id="comments">
+    <% bit.comments.each do |comment| %>
+      <li class="comment" id="comment_<%= comment.id %>">
+        <%= gravatar comment.author_email %>
+        <p class="author"><%= comment.author_name %></p>
+        <div class="body"><%= comment.body %></div>
+      </li>
+    <% end %>
+    </ul>
+  
+    <form action="/<%= params[:repo] %>/commit/<%= params[:sha] %>/comments" method="post" class="comment_form">
+      <input type="hidden" name="path" value="<%= bit.b_path %>" />
+      <label for="author_name">Your name:</label><input type="text" name="author_name" class="text" />
+      <label for="author_email">Your email:</label><input type="text" name="author_email" class="text" />
+      <label for="body">Comment:</label><textarea name="body"></textarea>
+      <input type="submit" />
+    </form>
+
   </div>
-  
-  <h3>Comments</h3>
-  <ul id="comments">
-  <% bit.comments.each do |comment| %>
-    <li class="comment" id="comment_<%= comment.id %>">
-      <%= gravatar comment.author_email %>
-      <p class="author"><%= comment.author_name %></p>
-      <div class="body"><%= comment.body %></div>
-    </li>
-  <% end %>
-  </ul>
-  
-  <form action="/<%= params[:repo] %>/commit/<%= params[:sha] %>/comments" method="post" class="comment_form">
-    <input type="hidden" name="path" value="<%= bit.b_path %>"></input>
-    <label for="author_name">Your name:</label><input type="text" name="author_name" class="text"></input>
-    <label for="author_email">Your email:</label><input type="text" name="author_email" class="text"></input>
-    <label for="body">Comment:</label><textarea name="body"></textarea>
-    <input type="submit"></input>
-  </form>
 <% end %>
+
+<script language="javascript">
+  $(function() {
+    $(".comment_form").hide();
+    $(".show_comment_form").click(function() {
+      var form = $(this).parent().parent().find(".comment_form");
+      // if ($(this).html() == 'add') {
+      //   form.slideDown();
+      //   $(this).html("cancel");
+      // } else {
+      //   form.slideUp();
+      //   $(this).html("add");
+      // }
+      form.slideToggle();
+      return false;
+    })
+  })
+</script>
