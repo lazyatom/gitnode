@@ -2,7 +2,7 @@
   <div class="message"><%= @commit.message %></div>
   
   <div class="author person">
-    <%= gravatar @commit.author %>
+    <%= gravatar @commit.author.email %>
     <div class="contact">
       <p><%= @commit.author.name %> <span class="kind">(author)</span></p>
       <p class="date"><%= @commit.authored_date.strftime("%d %b, %Y") %></p>
@@ -10,7 +10,7 @@
   </div>
   <% if @commit.author.email != @commit.committer.email %>
     <div class="committer person">
-      <%= gravatar @commit.committer %>
+      <%= gravatar @commit.committer.email %>
       <div class="contact">
         <p><%= @commit.committer.name %> <span class="kind">(committer)</span></p>
         <p class="date"><%= @commit.committed_date.strftime("%d %b, %Y") %></p>

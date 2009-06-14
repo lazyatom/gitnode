@@ -1,10 +1,5 @@
-require 'sinatra'
 require 'grit'
-require 'md5'
-
-require 'diff'
-
-GITNODE_ROOT = ENV["GITNODE_ROOT"]
+require 'comment'
 
 module GitNode
   class Repository
@@ -41,6 +36,23 @@ module GitNode
     def method_missing(*args)
       @commit.send(*args)
     end
+    def show
+      @commit.show.map { |b| GitNode::Bit.new(@repository, self, b) }
+    end
+  end
+  
+  class Bit
+    def initialize(repository, commit, bit)
+      @repository = repository
+      @commit = commit
+      @bit = bit
+    end
+    def method_missing(*args)
+      @bit.send(*args)
+    end
+    def comments
+      Comment.all(:repository_name => @repository.name, :commit_sha => @commit.sha, :path => @bit.b_path)
+    end
   end
   
   class Head
@@ -55,41 +67,4 @@ module GitNode
       @head.send(*args)
     end
   end
-end
-
-def load_repository(repo, branch=nil)
-  @repository = GitNode::Repository.new(repo)
-  @branch ||= 'master'
-end
-
-helpers do
-  include Rack::Utils
-  def link_to_commit(commit, text=nil)
-    %{<a href="/#{commit.repository.name}/commit/#{commit.sha}">#{text || commit.sha}</a>}
-  end
-  def link_to_repository(repository, text=nil)
-    %{<a href="/#{repository.name}">#{text || repository.name}</a>}
-  end
-  def gravatar(person)
-    %{<img src="http://gravatar.com/avatar/#{MD5.md5(person.email).to_s}.jpg?s=30">}
-  end
-end
-
-get '/favicon.ico' do
-end
-
-get '/:repo/commit/:sha/?' do |repo, sha|
-  load_repository(repo)
-  @commit = @repository.commit(sha)
-  erb :commit
-end
-
-get '/:repo/:branch/?' do |repo, branch|
-  load_repository(repo, branch)
-  erb :repository
-end
-
-get '/:repo/?' do |repo|
-  load_repository(repo)
-  erb :repository
 end

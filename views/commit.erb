@@ -14,4 +14,23 @@
     </div>
   <% end %>
   </div>
+  
+  <h3>Comments</h3>
+  <ul id="comments">
+  <% bit.comments.each do |comment| %>
+    <li class="comment" id="comment_<%= comment.id %>">
+      <%= gravatar comment.author_email %>
+      <p class="author"><%= comment.author_name %></p>
+      <div class="body"><%= comment.body %></div>
+    </li>
+  <% end %>
+  </ul>
+  
+  <form action="/<%= params[:repo] %>/commit/<%= params[:sha] %>/comments" method="post" class="comment_form">
+    <input type="hidden" name="path" value="<%= bit.b_path %>"></input>
+    <label for="author_name">Your name:</label><input type="text" name="author_name" class="text"></input>
+    <label for="author_email">Your email:</label><input type="text" name="author_email" class="text"></input>
+    <label for="body">Comment:</label><textarea name="body"></textarea>
+    <input type="submit"></input>
+  </form>
 <% end %>

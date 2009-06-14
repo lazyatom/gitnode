@@ -133,3 +133,16 @@ ul.parents li {
 .diff table td.insert {
   background-color: #B3FFB3;
 }
+
+.comment_form label {
+  display: block;
+}
+
+.comment_form input.text {
+  width: 100%;
+}
+
+.comment_form textarea {
+  width: 100%;
+  height: 10em;
+}
