@@ -8,10 +8,12 @@ GITNODE_ROOT = ENV["GITNODE_ROOT"]
 
 module GitNode
   class Repository
-    attr_reader :name
-    def initialize(path)
-      @name = File.basename(path)
-      @repo = Grit::Repo.new(path)
+    attr_reader :name, :path
+    def initialize(name)
+      @name = name
+      @path = File.join(GITNODE_ROOT, @name)
+      @path += ".git" unless File.exist?(@path)
+      @repo = Grit::Repo.new(@path)
     end
     def commits(*args)
       @repo.commits(*args).map { |c| Commit.new(self, c) }
@@ -56,9 +58,7 @@ module GitNode
 end
 
 def load_repository(repo, branch=nil)
-  path = File.join(GITNODE_ROOT, repo)
-  path += ".git" unless File.exist?(path)
-  @repository = GitNode::Repository.new(path)
+  @repository = GitNode::Repository.new(repo)
   @branch ||= 'master'
 end
 
@@ -66,6 +66,9 @@ helpers do
   include Rack::Utils
   def link_to_commit(commit, text=nil)
     %{<a href="/#{commit.repository.name}/commit/#{commit.sha}">#{text || commit.sha}</a>}
+  end
+  def link_to_repository(repository, text=nil)
+    %{<a href="/#{repository.name}">#{text || repository.name}</a>}
   end
   def gravatar(person)
     %{<img src="http://gravatar.com/avatar/#{MD5.md5(person.email).to_s}.jpg?s=30">}
