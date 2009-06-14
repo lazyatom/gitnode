@@ -1,7 +1,5 @@
 <ul id="branches">
   <% @repository.branches.each do |branch| %>
-  <li class="branch">
-    <p class="name"><%= link_to_commit branch.commit, branch.name %></p>
-  </li>
+  <li class="branch"><%= link_to_commit branch.commit, branch.name %></li>
   <% end %>
 </ul>

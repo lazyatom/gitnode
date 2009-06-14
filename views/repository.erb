@@ -1,4 +1,7 @@
+<h2>Branches</h2>
 <%= erb :repository_info, :layout => false %>
+
+<h2>Commits</h2>
 <ul id="commits">
   <% @repository.commits(@branch, false).each do |commit| %>
     <li class="commit_details">

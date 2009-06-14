@@ -4,9 +4,20 @@
   margin: 0 auto;
 }
 
+h1, h2 {
+  clear: both;
+}
+
+#branches {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2em;
+}
+
 #commits {
   list-style: none;
   padding-left: 0;
+  clear: both;
 }
 
 .commit_details {
