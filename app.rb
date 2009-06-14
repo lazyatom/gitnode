@@ -2,7 +2,6 @@ require 'sinatra'
 require 'md5'
 require 'diff'
 require 'gitnode'
-require 'Builder'
 
 GITNODE_ROOT = ENV["GITNODE_ROOT"]
 
@@ -55,12 +54,7 @@ get '/*/commit/:sha/?' do |repo, sha|
   erb :commit
 end
 
-get '/*/?' do |repo|
-  load_repository(repo)
-  erb :repository
-end
-
-get '/:repo/comments/rss.xml' do |repo|
+get '/*/comments/rss.xml' do |repo|
   comments = Comment.all(:repository_name => repo)
   builder do |xml|
     xml.instruct! :xml, :version => '1.0'
@@ -85,10 +79,16 @@ get '/:repo/comments/rss.xml' do |repo|
   end
 end
 
-post '/:repo/commit/:sha/comments' do |repo, sha|
+post '/*/commit/:sha/comments' do |repo, sha|
   comment = Comment.new(:repository_name => repo, :commit_sha => sha, :path => params[:path],
                         :body => params[:body], :author_name => params[:author_name], :author_email => params[:author_email])
   comment.save
   set_cookies
   redirect "/#{repo}/commit/#{sha}"
 end
+
+get '/*/?' do |repo|
+  load_repository(repo)
+  erb :repository
+end
+
