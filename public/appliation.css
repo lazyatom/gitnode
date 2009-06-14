@@ -12,7 +12,11 @@
   padding: 1em;
 }
 
-.commit_info {
+.commit {
+  clear: both;
+}
+
+.details .commit_info {
   float: left;
   width: 400px;
 }

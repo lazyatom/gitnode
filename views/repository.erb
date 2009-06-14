@@ -1,5 +1,8 @@
-<ul>
+<ul id="commits">
   <% @repository.commits(params[:branch], false).each do |commit| %>
-    <li><%= link_to_commit commit %></li>
+    <li class="commit">
+      <% @commit = commit %>
+      <%= erb :commit_info, :layout => false %>
+    </li>
   <% end %>
 </ul>

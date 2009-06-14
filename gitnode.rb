@@ -39,21 +39,10 @@ module GitNode
   end
 end
 
-def repo(params)
+def load_repository(params)
   path = File.join(GITNODE_ROOT, params[:repo])
   path += ".git" unless File.exist?(path)
-  GitNode::Repository.new(path)
-end
-
-get '/:repo/:branch/commits' do
-  @repository = repo(params)
-  erb :repository
-end
-
-get '/:repo/commit/:sha' do
-  @repository = repo(params)
-  @commit = @repository.commit(params[:sha])
-  erb :commit
+  @repository = GitNode::Repository.new(path)
 end
 
 helpers do
@@ -64,4 +53,15 @@ helpers do
   def gravatar(person)
     %{<img src="http://gravatar.com/avatar/#{MD5.md5(person.email).to_s}.jpg?s=40">}
   end
+end
+
+get '/:repo/:branch/commits' do
+  load_repository(params)
+  erb :repository
+end
+
+get '/:repo/commit/:sha' do
+  load_repository(params)
+  @commit = @repository.commit(params[:sha])
+  erb :commit
 end
