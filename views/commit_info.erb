@@ -4,16 +4,16 @@
   <div class="author person">
     <%= gravatar @commit.author %>
     <div class="contact">
-      <p><%= @commit.author.name %></p>
-      <p><%= @commit.authored_date.strftime("%d %b, %Y") %></p>
+      <p><%= @commit.author.name %> <span class="kind">(author)</span></p>
+      <p class="date"><%= @commit.authored_date.strftime("%d %b, %Y") %></p>
     </div>
   </div>
   <% if @commit.author.email != @commit.committer.email %>
     <div class="committer person">
       <%= gravatar @commit.committer %>
       <div class="contact">
-        <p><%= @commit.committer.name %></p>
-        <p><%= @commit.committed_date.strftime("%d %b, %Y") %></p>
+        <p><%= @commit.committer.name %> <span class="kind">(committer)</span></p>
+        <p class="date"><%= @commit.committed_date.strftime("%d %b, %Y") %></p>
       </div>
     </div>
   <% end %>

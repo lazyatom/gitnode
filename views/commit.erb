@@ -1,7 +1,8 @@
-<div class="details">
+<div class="commit_details">
   <%= erb :commit_info, :layout => false %>
 </div>
 <% @commit.show.each do |bit| %>
+  <div class="bit">
   <% if bit.deleted_file %>
     <p><%= bit.b_path %> was deleted.</p>
   <% else %>
@@ -12,4 +13,5 @@
       </div>
     </div>
   <% end %>
+  </div>
 <% end %>

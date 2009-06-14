@@ -4,7 +4,12 @@
   margin: 0 auto;
 }
 
-.details {
+#commits {
+  list-style: none;
+  padding-left: 0;
+}
+
+.commit_details {
   overflow: auto;
   border: 1px solid #d8d8d8;
   background-color: #fafafa;
@@ -12,11 +17,7 @@
   padding: 1em;
 }
 
-.commit {
-  clear: both;
-}
-
-.details .commit_info {
+.commit_info {
   float: left;
   width: 400px;
 }
@@ -35,9 +36,14 @@
   float: left;
 }
 
-.person p {
-  margin: 0;
+.person .contact .kind,
+.person .date {
   color: #999;
+}
+
+.person p {
+  margin: 0 0 0.2em 0;
+  color: #333;
 }
 
 .related_commits {
@@ -64,6 +70,10 @@ ul.parents {
 
 ul.parents li {
   margin: 0;
+}
+
+.bit {
+  clear: both;
 }
 
 .diff h2 {

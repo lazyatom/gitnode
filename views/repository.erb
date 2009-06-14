@@ -1,6 +1,7 @@
+<%= erb :repository_info, :layout => false %>
 <ul id="commits">
-  <% @repository.commits(params[:branch], false).each do |commit| %>
-    <li class="commit">
+  <% @repository.commits(@branch, false).each do |commit| %>
+    <li class="commit_details">
       <% @commit = commit %>
       <%= erb :commit_info, :layout => false %>
     </li>

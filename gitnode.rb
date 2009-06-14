@@ -19,6 +19,9 @@ module GitNode
     def commit(*args)
       Commit.new(self, @repo.commit(*args))
     end
+    def branches(*args)
+      @repo.branches(*args).map { |h| Head.new(self, h) }
+    end
     def method_missing(*args)
       @repo.send(*args)
     end
@@ -37,12 +40,26 @@ module GitNode
       @commit.send(*args)
     end
   end
+  
+  class Head
+    def initialize(repository, head)
+      @repository = repository
+      @head = head
+    end
+    def commit
+      GitNode::Commit.new(@repository, @head.commit)
+    end
+    def method_missing(*args)
+      @head.send(*args)
+    end
+  end
 end
 
-def load_repository(params)
-  path = File.join(GITNODE_ROOT, params[:repo])
+def load_repository(repo, branch=nil)
+  path = File.join(GITNODE_ROOT, repo)
   path += ".git" unless File.exist?(path)
   @repository = GitNode::Repository.new(path)
+  @branch ||= 'master'
 end
 
 helpers do
@@ -51,17 +68,25 @@ helpers do
     %{<a href="/#{commit.repository.name}/commit/#{commit.sha}">#{text || commit.sha}</a>}
   end
   def gravatar(person)
-    %{<img src="http://gravatar.com/avatar/#{MD5.md5(person.email).to_s}.jpg?s=40">}
+    %{<img src="http://gravatar.com/avatar/#{MD5.md5(person.email).to_s}.jpg?s=30">}
   end
 end
 
-get '/:repo/:branch/commits' do
-  load_repository(params)
+get '/favicon.ico' do
+end
+
+get '/:repo/commit/:sha/?' do |repo, sha|
+  load_repository(repo)
+  @commit = @repository.commit(sha)
+  erb :commit
+end
+
+get '/:repo/:branch/?' do |repo, branch|
+  load_repository(repo, branch)
   erb :repository
 end
 
-get '/:repo/commit/:sha' do
-  load_repository(params)
-  @commit = @repository.commit(params[:sha])
-  erb :commit
+get '/:repo/?' do |repo|
+  load_repository(repo)
+  erb :repository
 end
