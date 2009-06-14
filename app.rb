@@ -48,19 +48,14 @@ end
 get '/favicon.ico' do
 end
 
-get '/:repo/commit/:sha/?' do |repo, sha|
+get '/*/commit/:sha/?' do |repo, sha|
   get_cookies
   load_repository(repo)
   @commit = @repository.commit(sha)
   erb :commit
 end
 
-get '/:repo/:branch/?' do |repo, branch|
-  load_repository(repo, branch)
-  erb :repository
-end
-
-get '/:repo/?' do |repo|
+get '/*/?' do |repo|
   load_repository(repo)
   erb :repository
 end
