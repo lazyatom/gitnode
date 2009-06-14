@@ -1,5 +1,3 @@
-include Rack::Utils
-
 # basically stolen from Active Reload's Warehouse project.
 def diff(bit)
   raw_diff = bit.diff

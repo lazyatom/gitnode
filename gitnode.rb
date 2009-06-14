@@ -57,6 +57,7 @@ get '/:repo/commit/:sha' do
 end
 
 helpers do
+  include Rack::Utils
   def link_to_commit(commit, text=nil)
     %{<a href="/#{commit.repository.name}/commit/#{commit.sha}">#{text || commit.sha}</a>}
   end
