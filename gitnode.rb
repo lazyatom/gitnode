@@ -51,7 +51,8 @@ module GitNode
       @bit.send(*args)
     end
     def comments
-      Comment.all(:repository_name => @repository.name, :commit_sha => @commit.sha, :path => @bit.b_path)
+      Comment.all(:conditions => {:repository_name => @repository.name, :commit_sha => @commit.sha, :path => @bit.b_path},
+                  :order => [:created_at.asc])
     end
   end
   
