@@ -26,8 +26,11 @@ helpers do
   def link_to_commit(commit, text=nil)
     %{<a href="/#{commit.repository.name}/commit/#{commit.sha}">#{text || commit.sha}</a>}
   end
-  def link_to_repository(repository, text=nil)
-    %{<a href="/#{repository.name}">#{text || repository.name}</a>}
+  def link_to_repository
+    %{<a href="/#{@repository.name}">#{@repository.name}</a>}
+  end
+  def link_to_feed
+    %{<a href="/#{@repository.name}/comments/rss.xml">comment feed</a>}
   end
   def gravatar(email)
     %{<img src="http://gravatar.com/avatar/#{MD5.md5(email).to_s}.jpg?s=30">}
