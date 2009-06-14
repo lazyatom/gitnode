@@ -1,0 +1,5 @@
+<ul>
+  <% @repository.commits(params[:branch], false).each do |commit| %>
+    <li><%= link_to_commit commit %></li>
+  <% end %>
+</ul>

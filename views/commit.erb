@@ -1,0 +1,45 @@
+<div class="details">
+  <div class="commit_info">
+    <div class="message"><%= @commit.message %></div>
+    
+    <div class="author person">
+      <%= gravatar @commit.author %>
+      <div class="contact">
+        <p><%= @commit.author.name %></p>
+        <p><%= @commit.authored_date.strftime("%d %b, %Y") %></p>
+      </div>
+    </div>
+    <% if @commit.author.email != @commit.committer.email %>
+      <div class="committer person">
+        <%= gravatar @commit.committer %>
+        <div class="contact">
+          <p><%= @commit.committer.name %></p>
+          <p><%= @commit.committed_date.strftime("%d %b, %Y") %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <dl class="related_commits">
+    <dt>commit</dt><dd><%= @commit.sha %></dd>
+    <dt>parents</dt>
+    <dd>
+      <ul class="parents">
+        <% @commit.parents.each do |c|%>
+          <li><%= link_to_commit c %></li>
+        <% end %>
+      </ul>
+    </dd>
+  </dl>
+</div>
+<% @commit.show.each do |bit| %>
+  <% if bit.deleted_file %>
+    <p><%= bit.b_path %> was deleted.</p>
+  <% else %>
+    <div class="diff">
+      <h2><%= bit.b_path %></h2>
+      <div class="diff_container">
+        <%= diff bit %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
