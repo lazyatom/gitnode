@@ -40,15 +40,7 @@
   $(function() {
     $(".comment_form").hide();
     $(".show_comment_form").click(function() {
-      var form = $(this).parent().parent().find(".comment_form");
-      // if ($(this).html() == 'add') {
-      //   form.slideDown();
-      //   $(this).html("cancel");
-      // } else {
-      //   form.slideUp();
-      //   $(this).html("add");
-      // }
-      form.slideToggle();
+      $(this).parent().parent().find(".comment_form").slideToggle();
       return false;
     })
   })
