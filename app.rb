@@ -11,6 +11,16 @@ def load_repository(repo, branch=nil)
   @branch ||= 'master'
 end
 
+def get_cookies
+  @author_name = request.cookies["author_name"] || ""
+  @author_email = request.cookies["author_email"] || ""
+end
+
+def set_cookies
+  set_cookie "author_name", params[:author_name]
+  set_cookie "author_email", params[:author_email]
+end
+
 helpers do
   include Rack::Utils
   def link_to_commit(commit, text=nil)
@@ -36,6 +46,7 @@ get '/favicon.ico' do
 end
 
 get '/:repo/commit/:sha/?' do |repo, sha|
+  get_cookies
   load_repository(repo)
   @commit = @repository.commit(sha)
   erb :commit
@@ -80,5 +91,6 @@ post '/:repo/commit/:sha/comments' do |repo, sha|
   comment = Comment.new(:repository_name => repo, :commit_sha => sha, :path => params[:path],
                         :body => params[:body], :author_name => params[:author_name], :author_email => params[:author_email])
   comment.save
+  set_cookies
   redirect "/#{repo}/commit/#{sha}"
 end
