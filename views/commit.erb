@@ -29,8 +29,8 @@
   
     <form action="/<%= params[:repo] %>/commit/<%= params[:sha] %>/comments" method="post" class="comment_form">
       <input type="hidden" name="path" value="<%= bit.b_path %>" />
-      <label for="author_name">Your name:</label><input type="text" name="author_name" class="text" value="<%= @author_name %>"/>
-      <label for="author_email">Your email:</label><input type="text" name="author_email" class="text" value="<%= @author_email %>" />
+      <label for="author_name">Name:</label><input type="text" name="author_name" class="text" value="<%= @author_name %>"/>
+      <label for="author_email">Email:</label><input type="text" name="author_email" class="text" value="<%= @author_email %>" />
       <label for="body" class="body_label">Comment:</label><textarea name="body" class="comment_body"></textarea>
       <input type="submit" />
     </form>
