@@ -7,7 +7,7 @@ GITNODE_ROOT = ENV["GITNODE_ROOT"]
 
 def load_repository(repo, branch=nil)
   @repository = GitNode::Repository.new(repo)
-  @branch ||= 'master'
+  @branch = branch || 'master'
 end
 
 def get_cookies
@@ -30,6 +30,9 @@ helpers do
   end
   def link_to_feed
     %{<a href="/#{@repository.name}/comments/rss.xml">comment feed</a>}
+  end
+  def link_to_branch(branch)
+    %{<a href="/#{branch.repository.name}/branch/#{branch.name}">#{branch.name}</a>}
   end
   def gravatar(email)
     %{<img src="http://gravatar.com/avatar/#{MD5.md5(email).to_s}.jpg?s=30">}
@@ -92,6 +95,11 @@ post '/*/commit/:sha/comments' do |repo, sha|
   comment.save
   set_cookies
   redirect "/#{repo}/commit/#{sha}"
+end
+
+get '/*/branch/:branch' do |repo, branch|
+  load_repository(repo, branch)
+  erb :repository
 end
 
 get '/*/?' do |repo|

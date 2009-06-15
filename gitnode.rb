@@ -57,6 +57,7 @@ module GitNode
   end
   
   class Head
+    attr_reader :repository
     def initialize(repository, head)
       @repository = repository
       @head = head
