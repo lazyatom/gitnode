@@ -42,6 +42,13 @@ helpers do
     end 
     url + "/" + path
   end
+  def pagination_links
+    links = ""
+    page = params[:page] ? params[:page].to_i : 1
+    links += %{<a href="#{request.path}?page=#{page-1}">prev</a> | } if page > 1
+    links += %{<a href="#{request.path}?page=#{page+1}">next</a>}
+    links
+  end
 end
 
 get '/favicon.ico' do

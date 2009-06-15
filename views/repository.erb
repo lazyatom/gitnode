@@ -1,9 +1,9 @@
 <h2>Branches</h2>
 <%= erb :repository_info, :layout => false %>
 
-<h2>Commits</h2>
+<h2>Commits <%= pagination_links %></h2>
 <ul id="commits">
-  <% @repository.commits(@branch, false).each do |commit| %>
+  <% @repository.commits(@branch, 20, ((params[:page].to_i || 0) - 1) * 20).each do |commit| %>
     <li class="commit_details">
       <% @commit = commit %>
       <%= erb :commit_info, :layout => false %>
