@@ -37,4 +37,6 @@ def diff(bit)
     #{table_rows.join("\n")}
   </table>
   )
+rescue
+  bit.diff # just bail out.
 end
